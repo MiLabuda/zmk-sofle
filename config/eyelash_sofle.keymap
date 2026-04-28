@@ -1,21 +1,5 @@
-// Eyelash Sofle — Colemak DH layout
-// Inspired by matey-jack's "Cozy Keyboard" AltGr layer concept
-// macOS-centric (Command=LGUI, Option=LALT)
-//
-// Layer plan:
-//   0: BASE    — Colemak DH
-//   1: NAV     — Navigation + Symbols
-//   2: FUN     — F-keys, Media, Bluetooth, RGB
-//   3: (tri)   — reserved
-//
-// Hardware notes (eyelash_sofle):
-//   - 13 keys per row (outer pinky column on each side)
-//   - Thumb cluster: [ENC] [mod] [mod] [mod] [key] = 5 keys per side
-//   - Encoder (thumb[0]): left=C_MUTE tap, right=ENTER tap
-//   - sensor-bindings per layer required
-
-#define ZMK_POINTING_DEFAULT_MOVE_VAL 1200
-#define ZMK_POINTING_DEFAULT_SCRL_VAL 25
+#define ZMK_POINTING_DEFAULT_MOVE_VAL 1200  // 600
+#define ZMK_POINTING_DEFAULT_SCRL_VAL 25   // 10
 
 #include <input/processors.dtsi>
 #include <zephyr/dt-bindings/input/input-event-codes.h>
@@ -26,12 +10,8 @@
 #include <dt-bindings/zmk/pointing.h>
 #include <dt-bindings/zmk/rgb.h>
 
-// Layer indices
-#define BASE 0
-#define NAV  1
-#define FUN  2
-
 &mmv_input_listener { input-processors = <&zip_xy_scaler 2 1>; };
+
 &msc_input_listener { input-processors = <&zip_scroll_scaler 2 1>; };
 
 &msc {
@@ -57,7 +37,7 @@
     };
 
     behaviors {
-        // Tap=key, hold=layer — tap-preferred so fast taps are never swallowed
+        // tap=key, hold=layer — tap-preferred so fast taps are never swallowed
         lt_fun: lt_fun {
             compatible = "zmk,behavior-hold-tap";
             #binding-cells = <2>;
@@ -71,7 +51,7 @@
     combos {
         compatible = "zmk,combos";
 
-        // Q + S + Z held 2s → deep sleep (soft off)
+        // Q + S + Z held → deep sleep
         softoff {
             bindings = <&soft_off>;
             key-positions = <14 28 40>;
@@ -81,7 +61,7 @@
     conditional_layers {
         compatible = "zmk,conditional-layers";
         tri_layer {
-            if-layers = <NAV FUN>;
+            if-layers = <1 2>;
             then-layer = <3>;
         };
     };
@@ -93,34 +73,26 @@
         // Layer 0 — BASE (Colemak DH)
         // ==============================================================
         //
-        // ┌──────┬───┬───┬───┬───┬───┬───┐             ┌───┬───┬───┬───┬───┬───┬──────┐
-        // │ESC/Fn│ 1 │ 2 │ 3 │ 4 │ 5 │ENC│             │ENC│ 6 │ 7 │ 8 │ 9 │ 0 │ BSPC │
-        // ├──────┼───┼───┼───┼───┼───┼───┤             ├───┼───┼───┼───┼───┼───┼──────┤
-        // │ TAB  │ Q │ W │ F │ P │ B │ENC│             │ENC│ J │ L │ U │ Y │ ; │  '   │
-        // ├──────┼───┼───┼───┼───┼───┼───┤             ├───┼───┼───┼───┼───┼───┼──────┤
-        // │ LSFT │ A │ R │ S │ T │ G │ENC│             │ENC│ M │ N │ E │ I │ O │ RSFT │
-        // ├──────┼───┼───┼───┼───┼───┼───┤             ├───┼───┼───┼───┼───┼───┼──────┤
-        // │ LCTL │ Z │ X │ C │ D │ V │ENC│             │ENC│ K │ H │ , │ . │ / │ -/Fn │
-        // └──────┴───┴───┴───┴───┴───┴───┘             └───┴───┴───┴───┴───┴───┴──────┘
-        //      ┌──────┬──────┬───────┬──────┬───────┐ ┌────────┬──────┬───────┬──────┬──────┐
-        //      │(enc) │ LALT │mo NAV │ LGUI │ SPACE │ │  RET   │ RGUI │mo NAV │mo FUN│ DEL  │
-        //      └──────┴──────┴───────┴──────┴───────┘ └────────┴──────┴───────┴──────┴──────┘
+        // Row 0:  ESC/Fn  1   2   3   4   5  [ENC]   6   7   8   9   0  BSPC
+        // Row 1:  TAB     Q   W   F   P   B  [ENC]   J   L   U   Y   ;   '
+        // Row 2:  LSHFT   A   R   S   T   G  [ENC]   M   N   E   I   O  RSHFT
+        // Row 3:  LCTRL   Z   X   C   D   V  [ENC]   K   H   ,   .   /  -/Fn
+        // Thumb:  C_MUTE  LALT  NAV  LGUI  SPC      RET  RGUI  NAV  FUN  DEL
         //
-        // Notes:
-        //   ESC/Fn = tap ESC, hold mo FUN  (top-left outer column)
-        //   -/Fn   = tap MINUS, hold mo FUN  (bottom-right outer column)
-        //   LALT stays clean for macOS Polish Pro (Option+letter = ą ę ó etc.)
+        // ESC/Fn = tap ESC, hold mo FUN  (top-left)
+        // -/Fn   = tap MINUS, hold mo FUN  (bottom-right)
+        // LALT stays clean for macOS Polish Pro (Option+letter = ą ę ó etc.)
 
-        BASE {
+        layer0 {
             bindings = <
-&lt_fun FUN ESC  &kp N1  &kp N2        &kp N3   &kp N4   &kp N5   &kp C_MUTE       &kp C_MUTE  &kp N6  &kp N7     &kp N8     &kp N9    &kp N0    &kp BSPC
-&kp TAB          &kp Q   &kp W         &kp F    &kp P    &kp B    &kp C_MUTE       &kp C_MUTE  &kp J   &kp L      &kp U      &kp Y     &kp SEMI  &kp SQT
-&kp LSHFT        &kp A   &kp R         &kp S    &kp T    &kp G    &kp C_MUTE       &kp C_MUTE  &kp M   &kp N      &kp E      &kp I     &kp O     &kp RSHFT
-&kp LCTRL        &kp Z   &kp X         &kp C    &kp D    &kp V    &kp C_MUTE       &kp C_MUTE  &kp K   &kp H      &kp COMMA  &kp DOT   &kp FSLH  &lt_fun FUN MINUS
-&kp C_MUTE       &kp LALT  &mo NAV     &kp LGUI  &kp SPACE                         &kp RET     &kp RGUI  &mo NAV  &mo FUN   &kp DEL
+&lt_fun 2 ESC  &kp N1    &kp N2   &kp N3   &kp N4   &kp N5   &kp C_MUTE       &kp N6   &kp N7   &kp N8     &kp N9   &kp N0    &kp BSPC
+&kp TAB        &kp Q     &kp W    &kp F    &kp P    &kp B    &kp C_MUTE       &kp J    &kp L    &kp U      &kp Y    &kp SEMI  &kp SQT
+&kp LSHFT      &kp A     &kp R    &kp S    &kp T    &kp G    &kp C_MUTE       &kp M    &kp N    &kp E      &kp I    &kp O     &kp RSHFT
+&kp LCTRL      &kp Z     &kp X    &kp C    &kp D    &kp V    &kp C_MUTE       &kp K    &kp H    &kp COMMA  &kp DOT  &kp FSLH  &lt_fun 2 MINUS
+&kp C_MUTE     &kp LALT  &mo 1    &kp LGUI  &kp SPACE                         &kp RET  &kp RGUI  &mo 1     &mo 2    &kp DEL
             >;
 
-            sensor-bindings = <&scroll_encoder>;
+            sensor-bindings = <&inc_dec_kp C_VOLUME_UP C_VOL_DN>;
             display-name = "BASE";
         };
 
@@ -128,35 +100,28 @@
         // Layer 1 — NAV / SYM
         // ==============================================================
         //
-        // ┌──────┬───┬───┬───┬───┬───┐                   ┌─────┬─────┬─────┬─────┬─────┬──────┐
-        // │(held)│ ¥ │ ¢ │ £ │ € │ ‰ │                   │  ^  │  |  │  [  │  ]  │  §  │ DEL  │
-        // ├──────┼───┼───┼───┼───┼───┤                   ├─────┼─────┼─────┼─────┼─────┼──────┤
-        // │ BOD  │ ! │ W←│ ↑ │→W │ # │                   │  ß  │  \  │  {  │  }  │  ~  │ EOD  │
-        // ├──────┼───┼───┼───┼───┼───┤                   ├─────┼─────┼─────┼─────┼─────┼──────┤
-        // │  ⇧  │BOL│ ← │ ↓ │ → │EOL│                   │  `  │  /  │  (  │  )  │  ;  │  ⇧   │
-        // ├──────┼───┼───┼───┼───┼───┤                   ├─────┼─────┼─────┼─────┼─────┼──────┤
-        // │ Ctrl │<D │↑Sc│↓Sc│D> │ ↵ │                   │  *  │  =  │  <  │  >  │(hld)│  --  │
-        // └──────┴───┴───┴───┴───┴───┘                   └─────┴─────┴─────┴─────┴─────┴──────┘
-        //      ┌──────┬──────┬───────┬──────┬───────┐ ┌────────┬──────┬───────┬──────┬──────┐
-        //      │(enc) │ LALT │(held) │ LGUI │  RET  │ │   --   │ RGUI │(held) │  --  │  --  │
-        //      └──────┴──────┴───────┴──────┴───────┘ └────────┴──────┴───────┴──────┴──────┘
+        // Row 0:  ---   ¥   ¢   £   €   ‰  [ENC]   ^   |   [   ]   §  DEL
+        // Row 1:  BOD   !  W←   ↑  →W   #  [ENC]   ß   \   {   }   ~  EOD
+        // Row 2:  LSFT BOL  ←   ↓   →  EOL [ENC]   `   /   (   )   ;  RSFT
+        // Row 3:  CTRL <D  ↑Sc ↓Sc  D>  ↵  [ENC]   *   =   <   >  ---  ---
+        // Thumb:  C_MUTE  LALT  ---  LGUI  RET      ---  RGUI  ---  ---  ---
         //
         // macOS navigation:
-        //   W← / →W  = Option+Left/Right  — poprzednie/następne słowo
-        //   BOL/EOL  = Cmd+Left/Right     — początek/koniec linii
-        //   BOD/EOD  = Cmd+Up/Down        — początek/koniec dokumentu
-        //   <D / D>  = Ctrl+Left/Right    — poprzedni/następny desktop (Spaces)
+        //   W← / →W = Option+Left/Right — poprzednie/następne słowo
+        //   BOL/EOL = Cmd+Left/Right    — początek/koniec linii
+        //   BOD/EOD = Cmd+Up/Down       — początek/koniec dokumentu
+        //   <D / D> = Ctrl+Left/Right   — poprzedni/następny desktop (Spaces)
         //
-        // Currency (macOS Polish Pro — zweryfikuj w Keyboard Viewer):
+        // Currency (zweryfikuj w Keyboard Viewer na macOS Polish Pro):
         //   ¥=RA(Y)  ¢=RA(N4)  £=RA(N3)  €=RA(E)  ‰=RA(N5)  §=RA(N6)
 
-        NAV {
+        layer_1 {
             bindings = <
-&trans     &kp RA(Y)    &kp RA(N4)     &kp RA(N3)      &kp RA(E)     &kp RA(N5)   &trans       &trans  &kp CARET  &kp PIPE   &kp LBKT  &kp RBKT  &kp RA(N6)    &kp DEL
-&kp LG(UP) &kp EXCL     &kp LA(LEFT)   &kp UP          &kp LA(RIGHT) &kp HASH     &trans       &trans  &kp RA(S)  &kp BSLH   &kp LBRC  &kp RBRC  &kp TILDE     &kp LG(DOWN)
-&kp LSHFT  &kp LG(LEFT) &kp LEFT       &kp DOWN        &kp RIGHT     &kp LG(RIGHT) &trans      &trans  &kp GRAVE  &kp FSLH   &kp LPAR  &kp RPAR  &kp SEMI      &kp RSHFT
-&kp LCTRL  &kp LC(LEFT) &msc SCRL_UP   &msc SCRL_DOWN  &kp LC(RIGHT) &kp RET      &trans       &trans  &kp STAR   &kp EQUAL  &kp LT    &kp GT    &trans        &trans
-&trans     &kp LALT     &trans         &kp LGUI        &kp RET                                  &trans  &kp RGUI   &trans     &trans    &trans
+&trans     &kp RA(Y)     &kp RA(N4)    &kp RA(N3)      &kp RA(E)      &kp RA(N5)    &trans       &kp CARET  &kp PIPE   &kp LBKT  &kp RBKT  &kp RA(N6)  &kp DEL
+&kp LG(UP) &kp EXCL      &kp LA(LEFT)  &kp UP          &kp LA(RIGHT)  &kp HASH      &trans       &kp RA(S)  &kp BSLH   &kp LBRC  &kp RBRC  &kp TILDE   &kp LG(DOWN)
+&kp LSHFT  &kp LG(LEFT)  &kp LEFT      &kp DOWN        &kp RIGHT      &kp LG(RIGHT) &trans       &kp GRAVE  &kp FSLH   &kp LPAR  &kp RPAR  &kp SEMI    &kp RSHFT
+&kp LCTRL  &kp LC(LEFT)  &msc SCRL_UP  &msc SCRL_DOWN  &kp LC(RIGHT)  &kp RET       &trans       &kp STAR   &kp EQUAL  &kp LT    &kp GT    &trans      &trans
+&kp C_MUTE &kp LALT      &trans        &kp LGUI        &kp RET                                    &trans     &kp RGUI   &trans    &trans    &trans
             >;
 
             sensor-bindings = <&scroll_encoder>;
@@ -167,26 +132,19 @@
         // Layer 2 — FUN  (F-keys, Media, Bluetooth, RGB)
         // ==============================================================
         //
-        // ┌──────┬────┬────┬────┬────┬────┐             ┌────┬────┬────┬────┬─────┬───────┐
-        // │(held)│ F1 │ F2 │ F3 │ F4 │ F5 │             │ F6 │ F7 │ F8 │ F9 │ F10 │ BTCLR │
-        // ├──────┼────┼────┼────┼────┼────┤             ├────┼────┼────┼────┼─────┼───────┤
-        // │  --  │F11 │F12 │ <D │ D> │ -- │             │ -- │ -- │ -- │ -- │ --  │ BT 0  │
-        // ├──────┼────┼────┼────┼────┼────┤             ├────┼────┼────┼────┼─────┼───────┤
-        // │  --  │SCR │ -- │ -- │ -- │ -- │             │ -- │ -- │ -- │ -- │ --  │ BT 1  │
-        // ├──────┼────┼────┼────┼────┼────┤             ├────┼────┼────┼────┼─────┼───────┤
-        // │  --  │ -- │ -- │RST │BOT │ -- │             │ ⏹  │ ⏸  │ 🔉 │ 🔊 │ 🔇  │ BT 2  │
-        // └──────┴────┴────┴────┴────┴────┘             └────┴────┴────┴────┴─────┴───────┘
-        //      ┌──────┬──────┬───────┬──────┬───────┐ ┌────────┬──────┬───────┬──────┬──────┐
-        //      │(enc) │  --  │mo NAV │ LGUI │  RET  │ │ SPACE  │ RGUI │mo NAV │(held)│  --  │
-        //      └──────┴──────┴───────┴──────┴───────┘ └────────┴──────┴───────┴──────┴──────┘
+        // Row 0:  ---  F1  F2   F3   F4  F5  [ENC]  F6  F7   F8   F9  F10  BTCLR
+        // Row 1:  --- F11 F12   <D   D>  --  [ENC]  --  --   --   --   --  BT 0
+        // Row 2:  --- SCR  --   --   --  --  [ENC]  --  --   --   --   --  BT 1
+        // Row 3:  ---  -- RST  BOT   --  --  [ENC]  ⏹  ⏸   🔉   🔊  🔇  BT 2
+        // Thumb:  C_MUTE  ---  NAV  LGUI  RET       SPC  RGUI  NAV  ---  ---
 
-        FUN {
+        layer_2 {
             bindings = <
-&trans  &kp F1         &kp F2   &kp F3        &kp F4         &kp F5   &trans       &trans  &kp F6      &kp F7    &kp F8        &kp F9        &kp F10     &bt BT_CLR
-&trans  &kp F11        &kp F12  &kp LC(LEFT)  &kp LC(RIGHT)  &trans   &trans       &trans  &trans      &trans    &trans        &trans        &trans      &bt BT_SEL 0
-&trans  &kp LG(LS(N4)) &trans   &trans        &trans         &trans   &trans       &trans  &trans      &trans    &trans        &trans        &trans      &bt BT_SEL 1
-&trans  &trans         &trans   &sys_reset    &bootloader    &trans   &trans       &trans  &kp C_STOP  &kp C_PP  &kp C_VOL_DN  &kp C_VOL_UP  &kp C_MUTE  &bt BT_SEL 2
-&trans  &trans         &mo NAV  &kp LGUI      &kp RET                               &kp SPACE  &kp RGUI  &mo NAV  &trans  &trans
+&trans  &kp F1         &kp F2   &kp F3        &kp F4         &kp F5   &trans       &kp F6      &kp F7    &kp F8        &kp F9        &kp F10     &bt BT_CLR
+&trans  &kp F11        &kp F12  &kp LC(LEFT)  &kp LC(RIGHT)  &trans   &trans       &trans      &trans    &trans        &trans        &trans      &bt BT_SEL 0
+&trans  &kp LG(LS(N4)) &trans   &trans        &trans         &trans   &trans       &trans      &trans    &trans        &trans        &trans      &bt BT_SEL 1
+&trans  &trans         &trans   &sys_reset    &bootloader    &trans   &trans       &kp C_STOP  &kp C_PP  &kp C_VOL_DN  &kp C_VOL_UP  &kp C_MUTE  &bt BT_SEL 2
+&kp C_MUTE  &trans     &mo 1    &kp LGUI      &kp RET                              &kp SPACE   &kp RGUI  &mo 1         &trans        &trans
             >;
 
             sensor-bindings = <&inc_dec_kp C_VOLUME_UP C_VOL_DN>;
@@ -194,7 +152,7 @@
         };
 
         // ==============================================================
-        // Layer 3 — ADJUST  (tri-layer: mo NAV + mo FUN simultaneously)
+        // Layer 3 — ADJUST  (tri-layer: NAV + FUN jednocześnie)
         // ==============================================================
 
         layer_3 {
