@@ -86,7 +86,7 @@ layers:
   - Alt+$$mdi:arrow-right-bold$$
   - '#'
   - {t: '$$mdi:transfer$$', type: trans}
-  - {t: '$$mdi:transfer$$', type: trans}
+  - {t: '`', s: '~'}
   - {t: \, s: '|'}
   - '{'
   - '}'
@@ -99,7 +99,7 @@ layers:
   - $$mdi:arrow-right-bold$$
   - Gui+$$mdi:arrow-right-bold$$
   - {t: '$$mdi:transfer$$', type: trans}
-  - {t: '`', s: '~'}
+  - '*'
   - {t: /, s: '?'}
   - (
   - )
@@ -107,12 +107,12 @@ layers:
   - $$mdi:apple-keyboard-shift$$
   - $$mdi:apple-keyboard-control$$
   - Ctl+$$mdi:arrow-left-bold$$
-  - $$mdi:pan-up$$
   - $$mdi:pan-down$$
+  - $$mdi:pan-up$$
   - Ctl+$$mdi:arrow-right-bold$$
   - {t: '$$mdi:keyboard-return$$', type: enter}
   - {t: '$$mdi:transfer$$', type: trans}
-  - '*'
+  - {t: '-', s: _}
   - {t: '=', s: +}
   - <
   - '>'
