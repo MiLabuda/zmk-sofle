@@ -80,11 +80,11 @@ layers:
   - {t: '$$mdi:transfer$$', type: trans}
   - $$mdi:backspace-reverse-outline$$
   - Gui+$$mdi:arrow-up-bold$$
-  - '!'
+  - PG UP
   - Alt+$$mdi:arrow-left-bold$$
   - $$mdi:arrow-up-bold$$
   - Alt+$$mdi:arrow-right-bold$$
-  - '#'
+  - PG DN
   - {t: '$$mdi:transfer$$', type: trans}
   - {t: '`', s: '~'}
   - {t: \, s: '|'}
