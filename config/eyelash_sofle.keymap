@@ -97,7 +97,7 @@
         // ==============================================================
         //
         // Row 0:  ---   ¥   ¢   £   €   ‰  [ENC]   ^   |   [   ]   §  DEL
-        // Row 1:  BOD   !  W←   ↑  →W   #  [ENC]   ß   \   {   }   ~  EOD
+        // Row 1:  BOD  PGUP W←   ↑  →W PGDN [ENC]   ß   \   {   }   ~  EOD
         // Row 2:  LSFT BOL  ←   ↓   →  EOL [ENC]   `   /   (   )   ;  RSFT
         // Row 3:  CTRL <D  ↑Sc ↓Sc  D>  ↵  [ENC]   *   =   <   >  ---  ---
         // Thumb:  C_MUTE  LALT  ---  LGUI  RET      ---  RGUI  ---  ---  ---
@@ -114,7 +114,7 @@
         layer_1 {
             bindings = <
 &trans      &kp RA(Y)     &kp RA(N4)      &kp RA(N3)    &kp RA(E)      &kp RA(N5)       &trans  &kp CARET  &kp PIPE   &kp LBKT  &kp RBKT  &trans     &kp DEL
-&kp LG(UP)  &kp EXCL      &kp LA(LEFT)    &kp UP        &kp LA(RIGHT)  &kp HASH         &trans  &kp GRAVE  &kp BSLH   &kp LBRC  &kp RBRC  &kp TILDE  &trans
+&kp LG(UP)  &kp PG_UP     &kp LA(LEFT)    &kp UP        &kp LA(RIGHT)  &kp PG_DN        &trans  &kp GRAVE  &kp BSLH   &kp LBRC  &kp RBRC  &kp TILDE  &trans
 &kp LSHFT   &kp LG(LEFT)  &kp LEFT        &kp DOWN      &kp RIGHT      &kp LG(RIGHT)    &trans  &kp STAR   &kp FSLH   &kp LPAR  &kp RPAR  &kp SEMI   &kp RSHFT
 &kp LCTRL   &kp LC(LEFT)  &msc SCRL_DOWN  &msc SCRL_UP  &kp LC(RIGHT)  &kp RET          &trans  &kp MINUS  &kp EQUAL  &kp LT    &kp GT    &trans     &trans
 &kp C_MUTE  &kp LALT      &trans          &kp LGUI      &kp RET        &trans           &trans  &kp RGUI   &trans     &trans    &trans    &trans

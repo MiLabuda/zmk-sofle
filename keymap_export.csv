@@ -1,0 +1,30 @@
+LAYER 0 — BASE (Colemak DH),,,,,,,,,,,,
+ESC/FUN,1,2,3,4,5,[ENC],6,7,8,9,0,BSPC
+TAB,Q,W,F,P,B,[ENC],J,L,U,Y,;,'
+LSHIFT,A,R,S,T,G,[ENC],M,N,E,I,O,RSHIFT
+LCTRL,Z,X,C,D,V,[ENC],K,H,",",.,/,MINUS/FUN
+[ENC],LALT,mo NAV,LGUI,SPACE,RET,SPACE,RGUI,mo NAV,mo FUN,DEL,—
+
+,,,,,,,,,,,,
+LAYER 1 — NAV / SYM,,,,,,,,,,,,
+—,¥,¢,£,€,‰,[ENC],^,|,[,],§,DEL
+BOD,!,W←,↑,→W,#,[ENC],ß,\,{,},~,EOD
+LSHIFT,BOL,←,↓,→,EOL,[ENC],`,/,(,),;,RSHIFT
+LCTRL,<Desktop,↑Scroll,↓Scroll,Desktop>,↵,[ENC],*,=,<,>,—,—
+[ENC],LALT,—,—,LGUI,RET,—,RGUI,—,—,—,—
+
+,,,,,,,,,,,,
+LAYER 2 — FUN (F-keys / Media / Bluetooth),,,,,,,,,,,,
+—,F1,F2,F3,F4,F5,[ENC],F6,F7,F8,F9,F10,BT CLEAR
+—,F11,F12,<Desktop,Desktop>,—,[ENC],—,—,—,—,—,BT 0
+—,Screenshot,—,—,—,—,[ENC],—,—,—,—,—,BT 1
+—,—,—,RESET,BOOTLOADER,—,[ENC],Stop,Play/Pause,Vol↓,Vol↑,Mute,BT 2
+[ENC],—,mo NAV,LGUI,RET,SPACE,SPACE,RGUI,mo NAV,—,—,—
+
+,,,,,,,,,,,,
+LAYER 3 — ADJUST (tri-layer: NAV + FUN),,,,,,,,,,,,
+—,—,—,—,—,—,[ENC],—,—,—,—,—,—
+—,—,—,—,—,—,[ENC],—,—,—,—,—,—
+—,—,—,—,—,—,[ENC],—,—,—,—,—,—
+—,—,—,—,—,—,[ENC],—,—,—,—,—,—
+[ENC],—,—,—,—,—,—,—,—,—,—,—
